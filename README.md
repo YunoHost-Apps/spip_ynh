@@ -41,9 +41,8 @@ Can the app be used by multiple users? **Yes**
 
 #### Supported architectures
 
-* x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/spip%20%28Community%29.svg)](https://ci-apps.yunohost.org/ci/apps/spip/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/spip%20%28Community%29.svg)](https://ci-apps.yunohost.org/ci/apps/spip/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/spip%20%28Community%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/spip/)
-* Jessie x86-64b - [![Build Status](https://ci-stretch.nohost.me/ci/logs/spip%20%28Community%29.svg)](https://ci-stretch.nohost.me/ci/apps/spip/)
 
 ## Migrate from SPIP2
 
@@ -77,10 +76,8 @@ You should see that SPIP is installed after that.
 
 ---
 
-Developers info
-----------------
+## Developers info
 
-**Only if you want to use a testing branch for coding, instead of merging directly into master.**
 Please do your pull request to the [testing branch](https://github.com/YunoHost-Apps/spip_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.

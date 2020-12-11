@@ -7,4 +7,4 @@
 /etc/nginx/conf.d/$domain.d/$app.conf
 
 # php-fpm config
-/etc/php/7.0/fpm/pool.d/$app.conf
+/etc/php/$phpversion/fpm/pool.d/$app.conf

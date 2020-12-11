@@ -36,13 +36,10 @@ app=$YNH_APP_INSTANCE_NAME
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-ynh_print_info "Validating installation parameters..."
+ynh_script_progression --message="Validating installation parameters..."
 
 final_path=/var/www/$app
 test ! -e "$final_path" || ynh_die "This path already contains a folder"
-
-# Normalize the url path syntax
-path_url=$(ynh_normalize_url_path $path_url)
 
 # Register (book) web path
 ynh_webpath_register $app $domain $path_url
@@ -50,7 +47,7 @@ ynh_webpath_register $app $domain $path_url
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-ynh_print_info "Storing installation settings..."
+ynh_script_progression --message="Storing installation settings..."
 
 ynh_app_setting_set $app domain $domain
 ynh_app_setting_set $app path $path_url
@@ -62,7 +59,7 @@ ynh_app_setting_set $app users_status $users_status
 #=================================================
 # CREATE A MYSQL DATABASE
 #=================================================
-ynh_print_info "Creating a MySQL database..."
+ynh_script_progression --message="Creating a MySQL database..."
 
 db_name=$(ynh_sanitize_dbid $app)
 ynh_app_setting_set $app db_name $db_name
@@ -72,14 +69,14 @@ db_pwd=$(ynh_app_setting_get $app mysqlpwd)
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_print_info --message="Installing dependencies..."
+ynh_script_progression --message="Installing dependencies..."
 
 ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_print_info "Setting up source files..."
+ynh_script_progression --message="Setting up source files..."
 
 ynh_app_setting_set $app final_path $final_path
 # Download, check integrity, uncompress and patch the source from app.src
@@ -88,7 +85,7 @@ ynh_setup_source "$final_path"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_print_info "Configuring nginx web server..."
+ynh_script_progression --message="Configuring nginx web server..."
 
 # Create a dedicated nginx config
 ynh_add_nginx_config
@@ -96,7 +93,7 @@ ynh_add_nginx_config
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_print_info "Configuring system user..."
+ynh_script_progression --message="Configuring system user..."
 
 # Create a system user
 ynh_system_user_create $app
@@ -104,10 +101,11 @@ ynh_system_user_create $app
 #=================================================
 # PHP-FPM CONFIGURATION
 #=================================================
-ynh_print_info "Configuring php-fpm..."
+ynh_script_progression --message="Configuring php-fpm..."
 
 # Create a dedicated php-fpm config
-ynh_add_fpm_config
+ynh_add_fpm_config --package="$extra_php_dependencies"
+phpversion=$(ynh_app_setting_get --app=$app --key=phpversion)
 
 #=================================================
 # SPECIFIC SETUP
@@ -173,15 +171,9 @@ cp ../conf/mes_options.php $final_path/config/mes_options.php
 ynh_store_file_checksum "$final_path/config/connect.php"
 
 #=================================================
-# GENERIC FINALIZATION
-#=================================================
-# ADVERTISE SERVICE IN ADMIN PANEL
-#=================================================
-
-#=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_print_info "Configuring SSOwat..."
+ynh_script_progression --message="Configuring SSOwat..."
 
 # Make app public if necessary
 if [ $is_public -eq 1 ]; then
@@ -192,7 +184,7 @@ fi
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_print_info "Reloading nginx web server..."
+ynh_script_progression --message="Reloading nginx web server..."
 
 systemctl reload nginx
 
@@ -200,4 +192,4 @@ systemctl reload nginx
 # END OF SCRIPT
 #=================================================
 
-ynh_print_info "Installation of $app completed"
+ynh_script_progression --message="Installation of $app completed"

@@ -14,7 +14,7 @@
 		"email": "cyp@rouquin.me"
 	},
 	"requirements": {
-		"yunohost": ">= 3.2.2"
+		"yunohost": ">= 3.8.1"
 	},
 	"multi_instance": true,
 	"services": [
@@ -64,7 +64,7 @@
 				"name": "is_public",
 				"type": "boolean",
 				"ask": {
-					"en": "Is it a public SPIP site ?",
+					"en": "Is it a public SPIP site?",
 					"fr": "Est-ce un site public ?"
 				},
 				"default": true

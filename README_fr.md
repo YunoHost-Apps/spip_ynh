@@ -41,9 +41,8 @@ L'application peut-elle être utilisée par plusieurs utilisateurs? **Oui**
 
 #### Supported architectures
 
-* x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/spip%20%28Community%29.svg)](https://ci-apps.yunohost.org/ci/apps/spip/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/spip%20%28Community%29.svg)](https://ci-apps.yunohost.org/ci/apps/spip/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/spip%20%28Community%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/spip/)
-* Jessie x86-64b - [![Build Status](https://ci-stretch.nohost.me/ci/logs/spip%20%28Community%29.svg)](https://ci-stretch.nohost.me/ci/apps/spip/)
 
 ## Migration depuis SPIP2
 
@@ -74,10 +73,8 @@ Notez qu'une tâche cron sera exécutée après la fin de cette commande. Vous d
 
 ---
 
-Informations pour les développeurs
-----------------
+## Informations pour les développeurs
 
-**Seulement si vous voulez utiliser une branche de test pour le codage, au lieu de fusionner directement dans la banche principale.**
 Merci de faire vos pull request sur la [branche testing](https://github.com/YunoHost-Apps/spip_ynh/tree/testing).
 
 Pour essayer la branche testing, procédez comme suit.
