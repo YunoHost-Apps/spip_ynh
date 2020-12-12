@@ -1,6 +1,6 @@
 # SPIP pour YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/spip.svg)](https://dash.yunohost.org/appci/app/spip)  
+[![Integration level](https://dash.yunohost.org/integration/spip.svg)](https://dash.yunohost.org/appci/app/spip) ![](https://ci-apps.yunohost.org/ci/badges/spip.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/spip.maintain.svg)  
 [![Install spip with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=spip)
 
 *[Read this readme in english.](./README.md)* 
@@ -36,8 +36,8 @@ Comment configurer cette application: via le panneau d'administration.
 
 #### Support multi-utilisateurs
 
-L'authentification LDAP et HTTP est-elle prise en charge? **Oui**
-L'application peut-elle être utilisée par plusieurs utilisateurs? **Oui**
+L'authentification LDAP et HTTP est-elle prise en charge ? **Oui**
+L'application peut-elle être utilisée par plusieurs utilisateurs ? **Oui**
 
 #### Supported architectures
 
@@ -46,7 +46,7 @@ L'application peut-elle être utilisée par plusieurs utilisateurs? **Oui**
 
 ## Migration depuis SPIP2
 
-**Ceci n'est pas encore considéré comme stable, veuillez le faire avec soin et uniquement pour test!**
+**Ceci n'est pas encore considéré comme stable, veuillez le faire avec soin et uniquement pour test !**
 
 Ce paquet gère la migration de SPIP2 vers SPIP. Pour cela, votre application SPIP2 doit être **à jour** dans YunoHost. Pour s'en assurer :
 
@@ -67,9 +67,9 @@ Notez qu'une tâche cron sera exécutée après la fin de cette commande. Vous d
 
 ## Links
 
- * Signaler un bug: https://github.com/YunoHost-Apps/spip_ynh/issues
- * Site de l'application: Lien vers le site officiel de cette application
- * Site web YunoHost: https://yunohost.org/
+ * Signaler un bug : https://github.com/YunoHost-Apps/spip_ynh/issues
+ * Site de l'application : Lien vers le site officiel de cette application
+ * Site web YunoHost : https://yunohost.org/
 
 ---
 
