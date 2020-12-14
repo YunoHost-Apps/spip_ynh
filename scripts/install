@@ -74,6 +74,7 @@ ynh_script_progression --message="Setting up source files..."
 ynh_app_setting_set $app final_path $final_path
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source "$final_path"
+cp ../conf/mes_options.php $final_path/config/mes_options.php
 
 #=================================================
 # NGINX CONFIGURATION
@@ -149,7 +150,7 @@ ynh_local_curl "/ecrire/?suivant" "exec=install" "etape=fin"
 #=================================================
 
 #ynh_replace_string "'','utf8');" "'ldap.php','utf8');" $final_path/config/connect.php
-cp ../conf/mes_options.php $final_path/config/mes_options.php
+#cp ../conf/mes_options.php $final_path/config/mes_options.php
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
