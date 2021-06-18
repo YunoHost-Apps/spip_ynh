@@ -175,7 +175,7 @@ ynh_permission_update --permission="main" --add="visitors"
 
 ynh_backup_if_checksum_is_different --file="$final_path/config/connect.php"
 
-ynh_secure_remove --file="$final_path/config/connect.php"
+mv $final_path/config/connect.php $final_path/config/connect.php.ynh_bkp
 
 # Installation with curl
 ynh_script_progression --message="Finalizing installation..."
@@ -219,6 +219,12 @@ cp ../conf/mes_options.php $final_path/config/mes_options.php
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
 #=================================================
+
+if [ ! -f $final_path/config/connect.php ]; then
+	mv $final_path/config/connect.php.ynh_bkp $final_path/config/connect.php
+else
+	ynh_secure_remove --file="$final_path/config/connect.php.ynh_bkp"
+fi
 
 ynh_store_file_checksum --file="$final_path/config/connect.php"
 
