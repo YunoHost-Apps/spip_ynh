@@ -14,7 +14,7 @@ SPIP is a publishing system for the Internet in which great importance is attach
 
 Source: [spip.net](http://www.spip.net/en_rubrique25.html)
 
-**Shipped version:** 3.2.11
+**Shipped version:** 4.0.0
 
 ## Screenshots
 
