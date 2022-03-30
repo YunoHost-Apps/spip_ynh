@@ -6,7 +6,7 @@
         "en": "CMS with a focus on collaborative edition and multilingualism",
         "fr": "CMS conçu pour l'édition collaborative et le multilinguisme"
     },
-    "version": "4.0.4~ynh1",
+    "version": "4.1.0~ynh1",
     "url": "http://www.spip.net/",
     "upstream": {
         "license": "GPL-3.0-or-later",
