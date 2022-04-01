@@ -17,7 +17,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 CMS with a focus on collaborative edition and multilingualism
 
-**Shipped version:** 4.0.4~ynh1
+**Shipped version:** 4.1.0-rc~ynh1
 
 **Demo:** https://demo.spip.net/
 
