@@ -214,6 +214,9 @@ ynh_script_progression --message="Updating a configuration file..."
 #ynh_replace_string --match_string="'','utf8');" --replace_string="'ldap.php','utf8');" --target_file=$final_path/config/connect.php
 cp ../conf/mes_options.php $final_path/config/mes_options.php
 
+# Add security fix https://www.spip.net/en_article4201.html
+cp ../conf/ecran_securite.php $install_dir/config/ecran_securite.php
+
 if [ ! -f $final_path/config/connect.php ]; then
 	mv $final_path/config/connect.php.ynh_bkp $final_path/config/connect.php
 else
