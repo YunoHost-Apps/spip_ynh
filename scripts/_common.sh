@@ -1,11 +1,7 @@
 #!/bin/bash
 
 #=================================================
-# COMMON VARIABLES
-#=================================================
-
-#=================================================
-# EXPERIMENTAL HELPERS
+# COMMON VARIABLES AND CUSTOM HELPERS
 #=================================================
 
 # Send an email to inform the administrator
@@ -95,21 +91,27 @@ __PRE_TAG1__$(yunohost tools diagnosis | grep -B 100 "services:" | sed '/service
  	if [ "$admin_mail_html" -eq 1 ]
  	then
 		# Insert 'br' tags at each ending of lines.
-		ynh_replace_string "$" "<br>" mail_to_send
+		# FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace "$" "<br>" mail_to_send
 
 		# Insert starting HTML tags
 		sed --in-place '1s@^@<!DOCTYPE html>\n<html>\n<head></head>\n<body>\n@' mail_to_send
 
 		# Keep tabulations
-		ynh_replace_string "  " "\&#160;\&#160;" mail_to_send
-		ynh_replace_string "\t" "\&#160;\&#160;" mail_to_send
+		# FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace "  " "\&#160;\&#160;" mail_to_send
+		# FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace "\t" "\&#160;\&#160;" mail_to_send
 
 		# Insert url links tags
-		ynh_replace_string "__URL_TAG1__\(.*\)__URL_TAG2__\(.*\)__URL_TAG3__" "<a href=\"\2\">\1</a>" mail_to_send
+		# FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace "__URL_TAG1__\(.*\)__URL_TAG2__\(.*\)__URL_TAG3__" "<a href=\"\2\">\1</a>" mail_to_send
 
 		# Insert pre tags
-		ynh_replace_string "__PRE_TAG1__" "<pre>" mail_to_send
-		ynh_replace_string "__PRE_TAG2__" "<\pre>" mail_to_send
+		# FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace "__PRE_TAG1__" "<pre>" mail_to_send
+		# FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace "__PRE_TAG2__" "<\pre>" mail_to_send
 
 		# Insert finishing HTML tags
 		echo -e "\n</body>\n</html>" >> mail_to_send
@@ -117,11 +119,14 @@ __PRE_TAG1__$(yunohost tools diagnosis | grep -B 100 "services:" | sed '/service
 	# Otherwise, remove tags to keep a plain text.
 	else
 		# Remove URL tags
-		ynh_replace_string "__URL_TAG[1,3]__" "" mail_to_send
-		ynh_replace_string "__URL_TAG2__" ": " mail_to_send
+		# FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace "__URL_TAG[1,3]__" "" mail_to_send
+		# FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace "__URL_TAG2__" ": " mail_to_send
 
 		# Remove PRE tags
-		ynh_replace_string "__PRE_TAG[1-2]__" "" mail_to_send
+		# FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace "__PRE_TAG[1-2]__" "" mail_to_send
 	fi
 
 	# Define binary to use for mail command
@@ -214,7 +219,8 @@ ynh_handle_app_migration ()  {
   fi
 
   #=================================================
-  # CHECK IF IT HAS TO MIGRATE 
+  # CHECK IF IT HAS TO MIGRATE
+
   #=================================================
 
   migration_process=0
@@ -269,7 +275,8 @@ ynh_handle_app_migration ()  {
     cp -a "$settings_dir/$old_app" "$settings_dir/$new_app"
 
     # Replace the old id by the new one
-    ynh_replace_string "\(^id: .*\)$old_app" "\1$new_app" "$settings_dir/$new_app/settings.yml"
+    # FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace "\(^id: .*\)$old_app" "\1$new_app" "$settings_dir/$new_app/settings.yml"
     # INFO: There a special behavior with yunohost app setting:
     # if the id given in argument does not match with the id
     # stored in the config file, the config file will be purged.
@@ -303,13 +310,16 @@ ynh_handle_app_migration ()  {
     #=================================================
 
     # Replace nginx checksum
-    ynh_replace_string "\(^checksum__etc_nginx.*\)_$old_app" "\1_$new_app/" "$settings_dir/$new_app/settings.yml"
+    # FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace "\(^checksum__etc_nginx.*\)_$old_app" "\1_$new_app/" "$settings_dir/$new_app/settings.yml"
 
     # Replace php5-fpm checksums
-    ynh_replace_string "\(^checksum__etc_php5.*[-_]\)$old_app" "\1$new_app/" "$settings_dir/$new_app/settings.yml"
+    # FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace "\(^checksum__etc_php5.*[-_]\)$old_app" "\1$new_app/" "$settings_dir/$new_app/settings.yml"
 
     # Replace install_dir
-    ynh_replace_string "\(^install_dir: .*\)$old_app" "\1$new_app" "$settings_dir/$new_app/settings.yml"
+    # FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace "\(^install_dir: .*\)$old_app" "\1$new_app" "$settings_dir/$new_app/settings.yml"
 
     #=================================================
     # MOVE THE DATABASE
@@ -328,17 +338,17 @@ ynh_handle_app_migration ()  {
         local sql_dump="/tmp/${db_name}-$(date '+%s').sql"
 
         # Dump the old database
-        ynh_mysql_dump_db "$db_name" > "$sql_dump"
+        ynh_mysql_dump_db > "$sql_dump"
 
         # Create a new database
-#REMOVEME?         ynh_mysql_setup_db $new_db_name $new_db_name $db_pwd
+#REMOVEME?         # FIXMEhelpers2.1 ynh_mysql_create_db $new_db_name $new_db_name $db_pwd
         # Then restore the old one into the new one
-        ynh_mysql_connect_as $new_db_name $db_pwd $new_db_name < "$sql_dump"
+        ynh_mysql_db_shell < "$sql_dump"
 
         # Remove the old database
-#REMOVEME?         ynh_mysql_remove_db $db_name $db_name
+#REMOVEME?         # FIXMEhelpers2.1 ynh_mysql_drop_db && ynh_mysql_drop_user $db_name $db_name
         # And the dump
-        ynh_secure_remove "$sql_dump"
+        ynh_safe_rm "$sql_dump"
 
         # Update the value of $db_name
         db_name=$new_db_name
@@ -368,14 +378,14 @@ ynh_handle_app_migration ()  {
       local old_package_name="${old_app//_/-}-ynh-deps"
       local new_package_name="${new_app//_/-}-ynh-deps"
 
-      if ynh_package_is_installed "$old_package_name"
+      if _ynh_apt_package_is_installed"$old_package_name"
       then
         # Install a new fake package
         app=$new_app
-#REMOVEME?         ynh_install_app_dependencies $pkg_dependencies
+#REMOVEME?         ynh_apt_install_dependencies $pkg_dependencies
         # Then remove the old one
         app=$old_app
-#REMOVEME?         ynh_remove_app_dependencies
+#REMOVEME?         ynh_apt_remove_dependencies
       fi
     fi
 
@@ -384,7 +394,6 @@ ynh_handle_app_migration ()  {
     #=================================================
 
     app=$new_app
-
 
     # Set migration_process to 1 to inform that an upgrade has been made
     migration_process=1

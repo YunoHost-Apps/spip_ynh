@@ -1,79 +1,63 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# CHECK VERSION
-#=================================================
-
-upgrade_type=$(ynh_check_app_version_changed)
-
-#=================================================
-# STANDARD UPGRADE STEPS
-#=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
-ynh_script_progression --message="Ensuring downward compatibility..."
+ynh_script_progression "Ensuring downward compatibility..."
 
 # If users_status doesn't exist, create it
+# FIXMEhelpers2.1: maybe replace with: ynh_app_setting_set_default --key=users_status --value="Editor"
 if [ -z "${users_status:-}" ]; then
 	users_status="Editor"
-	ynh_app_setting_set --app=$app --key=users_status --value=$users_status
+	ynh_app_setting_set --key=users_status --value=$users_status
 fi
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
-if [ "$upgrade_type" == "UPGRADE_APP" ]
+# FIXME: this is still supported but the recommendation is now to *always* re-setup the app sources wether or not the upstream sources changed
+if ynh_app_upstream_version_changed
 then
-	ynh_script_progression --message="Upgrading source files..."
+	ynh_script_progression "Upgrading source files..."
 
 	# Download, check integrity, uncompress and patch the source from app.src
 	ynh_setup_source --dest_dir="$install_dir"
 fi
 
-chmod -R o-rwx "$install_dir"
-chown -R $app:www-data "$install_dir"
-
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
 #=================================================
 # PHP-FPM CONFIGURATION
 #=================================================
-ynh_script_progression --message="Upgrading PHP-FPM configuration..."
+ynh_script_progression "Upgrading PHP-FPM configuration..."
 
 # Create a dedicated PHP-FPM config
-ynh_add_fpm_config --usage=low --footprint=low
+ynh_config_add_phpfpm
 
 # Create a dedicated NGINX config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
-#=================================================
-# SPECIFIC UPGRADE
 #=================================================
 # SETUP APPLICATION WITH CURL
 #=================================================
-ynh_script_progression --message="Setuping application with CURL..."
+ynh_script_progression "Setuping application with CURL..."
 
 # Set right permissions for curl install
 mkdir -p $install_dir/plugins/auto
-chown -R $app:www-data "$install_dir"
-
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
 # Set the app as temporarily public for curl call
-ynh_script_progression --message="Configuring SSOwat..."
+ynh_script_progression "Configuring SSOwat..."
 
-ynh_backup_if_checksum_is_different --file="$install_dir/config/connect.php"
+ynh_backup_if_checksum_is_different "$install_dir/config/connect.php"
 
 mv $install_dir/config/connect.php $install_dir/config/connect.php.ynh_bkp
 
 # Installation with curl
-ynh_script_progression --message="Finalizing installation..."
+ynh_script_progression "Finalizing installation..."
 ynh_local_curl "/ecrire/?suivant" "exec=install" "etape=chmod"
 ynh_local_curl "/ecrire/?suivant" "exec=install" "etape=2" "chmod=750" "adresse_db=localhost" "login_db=$db_name" "pass_db=$db_pwd" "server_db=mysql"
 ynh_local_curl "/ecrire/?suivant" "exec=install" "etape=3" "adresse_db=localhost" "login_db=$db_name" "pass_db=$db_pwd" "server_db=mysql" "choix_db=$db_name" "tprefix=$db_name"
@@ -105,9 +89,9 @@ ynh_local_curl "/ecrire/?suivant" "exec=install" "etape=fin"
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Updating a configuration file..."
+ynh_script_progression "Updating configuration..."
 
-#ynh_replace_string --match_string="'','utf8');" --replace_string="'ldap.php','utf8');" --target_file=$install_dir/config/connect.php
+#ynh_replace --match="'','utf8');" --replace="'ldap.php','utf8');" --file=$install_dir/config/connect.php
 cp ../conf/mes_options.php $install_dir/config/mes_options.php
 
 # Add security fix https://www.spip.net/en_article4201.html to be removed after version 4.2.2
@@ -116,13 +100,13 @@ cp ../conf/ecran_securite.php $install_dir/config/ecran_securite.php
 if [ ! -f $install_dir/config/connect.php ]; then
 	mv $install_dir/config/connect.php.ynh_bkp $install_dir/config/connect.php
 else
-	ynh_secure_remove --file="$install_dir/config/connect.php.ynh_bkp"
+	ynh_safe_rm "$install_dir/config/connect.php.ynh_bkp"
 fi
 
-ynh_store_file_checksum --file="$install_dir/config/connect.php"
+ynh_store_file_checksum "$install_dir/config/connect.php"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed" --last
+ynh_script_progression "Upgrade of $app completed"
