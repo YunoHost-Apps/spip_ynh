@@ -20,7 +20,7 @@ Il NE doit PAS être modifié à la main.
 
 CMS with a focus on collaborative edition and multilingualism
 
-**Version incluse :** 4.3.3~ynh2
+**Version incluse :** 4.3.5~ynh1
 
 **Démo :** <https://demo.spip.net/>
 

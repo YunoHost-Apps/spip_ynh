@@ -20,7 +20,7 @@
 
 CMS with a focus on collaborative edition and multilingualism
 
-**Поставляемая версия:** 4.3.3~ynh2
+**Поставляемая версия:** 4.3.5~ynh1
 
 **Демо-версия:** <https://demo.spip.net/>
 
