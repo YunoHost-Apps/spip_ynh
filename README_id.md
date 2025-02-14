@@ -20,7 +20,7 @@ Ini TIDAK boleh diedit dengan tangan.
 
 CMS with a focus on collaborative edition and multilingualism
 
-**Versi terkirim:** 4.3.6~ynh1
+**Versi terkirim:** v4.4.0~ynh1
 
 **Demo:** <https://demo.spip.net/>
 
