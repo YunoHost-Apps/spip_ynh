@@ -20,7 +20,7 @@ EZ editatu eskuz.
 
 CMS with a focus on collaborative edition and multilingualism
 
-**Paketatutako bertsioa:** 4.3.6~ynh1
+**Paketatutako bertsioa:** 4.4.2~ynh1
 
 **Demoa:** <https://demo.spip.net/>
 
