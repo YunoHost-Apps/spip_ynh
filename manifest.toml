@@ -18,7 +18,7 @@ userdoc = "https://www.spip.net/en_rubrique57.html"
 code = "https://git.spip.net/spip/spip"
 
 [integration]
-yunohost = ">= 12.1.18"
+yunohost = ">= 12.1.38"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = true
