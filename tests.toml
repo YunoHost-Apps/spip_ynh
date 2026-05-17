@@ -6,4 +6,10 @@ test_format = 1.0
     # Default args to use for install
     # -------------------------------
 
-	args.users_status = "Editor"
+    args.users_status = "Editor"
+
+    # -------------------------------
+    # Commits to test upgrade from
+    # -------------------------------
+
+    test_upgrade_from.cbf29f0cb6aba6fced7d9774de6944de4cc2e8d4.name = "Upgrade from 4.3.6~ynh1"
