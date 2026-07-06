@@ -1,4 +1,4 @@
-# Version française
+# Version française
 
 **Maintenance et signalement des failles de sécurité pour SPIP (package Yunohost)**
 
