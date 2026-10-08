@@ -4,7 +4,7 @@ id = "spip"
 name = "SPIP"
 description.en = "CMS with a focus on collaborative edition and multilingualism"
 description.fr = "CMS conçu pour l'édition collaborative et le multilinguisme"
-version = "4.4.27~ynh1"
+version = "4.4.28~ynh1"
 
 maintainers = ["genma"]
 
@@ -56,8 +56,8 @@ ram.runtime = "50M"
 
 [resources]
         [resources.sources.main]
-        url = "https://files.spip.net/spip/archives/spip-v4.4.27.zip"
-        sha256 = "7b2124401528a6c91a64e2b8d4bc728c2c670eb996340d4fba461b4731795582"
+        url = "https://files.spip.net/spip/archives/spip-v4.4.28.zip"
+        sha256 = "15016e75d097f322e307ec3aa718fc14a5aa2c2e8c7fcc8c4184aeaef84e6706"
         in_subdir = false
     
     [resources.system_user]
